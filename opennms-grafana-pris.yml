@@ -22,7 +22,7 @@ services:
         - /var/opennms/reports
         - /opt/opennms/etc
   opennms:
-    image: indigo/docker-opennms:18.0.1-1
+    image: indigo/docker-opennms:18.0.4-1
     env_file:
       - .opennms.env
       - .postgres.env
@@ -45,7 +45,7 @@ services:
     ports:
       - "8000:8000"
   grafana:
-    image: grafana/grafana:3.1.1
+    image: grafana/grafana:4.1.1
     volumes:
       - /etc/localtime:/etc/localtime:ro
     env_file:
