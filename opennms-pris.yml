@@ -5,7 +5,7 @@ services:
     volumes:
         - /var/lib/postgresql/data
   database:
-    image: postgres:9.5.4
+    image: postgres:9.6.1
     env_file:
       - .postgres.env
     ports:
@@ -22,7 +22,7 @@ services:
         - /var/opennms/reports
         - /opt/opennms/etc
   opennms:
-    image: indigo/docker-opennms:18.0.1-1
+    image: opennms/horizon-core-web:foundation-2017
     env_file:
       - .opennms.env
       - .postgres.env
@@ -41,6 +41,6 @@ services:
       - "5817:5817"
       - "162:162/udp"
   pris:
-    image: indigo/docker-pris
+    image: opennms/pris:1.1.5
     ports:
       - "8000:8000"

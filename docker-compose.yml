@@ -5,7 +5,7 @@ services:
     volumes:
       - /var/lib/postgresql/data
   database:
-    image: postgres:9.5
+    image: postgres:9.6.1
     env_file:
       - .postgres.env
     ports:
@@ -20,7 +20,7 @@ services:
       - /opennms-data
       - /myhost/opennms/etc:/opt/opennms/etc
   opennms:
-    image: opennms/horizon-core-web:foundation-2016
+    image: opennms/horizon-core-web:foundation-2017
     env_file:
       - .opennms.env
       - .postgres.env

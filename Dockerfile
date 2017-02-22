@@ -2,7 +2,7 @@ FROM opennms/openjdk:8u121-jdk
 
 MAINTAINER Ronny Trommer <ronny@opennms.org>
 
-ARG OPENNMS_VERSION=branches-foundation-2016
+ARG OPENNMS_VERSION=branches-foundation-2017
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     rpm -Uvh http://yum.opennms.org/repofiles/opennms-repo-${OPENNMS_VERSION}-rhel7.noarch.rpm && \
