@@ -1,9 +1,5 @@
-version: '2'
+version: '3'
 services:
-  db_data:
-    image: tianon/true
-    volumes:
-      - /var/lib/postgresql/data
   database:
     image: postgres:9.5
     env_file:
@@ -12,24 +8,26 @@ services:
       - "5432:5432"
     depends_on:
       - db_data
-    volumes_from:
-      - db_data:rw
-  opennms_data:
-    image: tianon/true
     volumes:
-      - /opennms-data
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - onms
+    deploy:
+      mode: replicated
+      replicas: 1
   opennms:
-    image: opennms/horizon-core-web:latest
+    image: rohscx/horizon-core-web
     env_file:
       - .opennms.env
       - .postgres.env
     depends_on:
       - database
-      - opennms_data
-    volumes_from:
-      - opennms_data:rw
     volumes:
-      - /myhost/opennms/etc:/opt/opennms/etc
+      - opennms_data:/opennms-data
+    volumes:
+      - opennms_etc:/opt/opennms/etc
+    networks:
+      - onms
     command: ["-s"]
     ports:
       - "8980:8980"
@@ -39,3 +37,24 @@ services:
       - "61616:61616"
       - "5817:5817"
       - "162:162/udp"
+    deploy:
+      mode: replicated
+      replicas: 1
+volumes:
+  database_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "/swarm/volumes/database_1/data"
+      name: "database_data"   
+  opennms_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "/swarm/volumes/onms_1/data"
+      name: "opennms_data"
+  opennms_etc:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "/swarm/volumes/onms_1/etc"
+      name: "opennms_etc"
+networks:
+  onms:
