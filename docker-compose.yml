@@ -16,7 +16,7 @@ services:
       mode: replicated
       replicas: 1
   opennms:
-    image: rohscx/horizon-core-web
+    image: opennms/horizon-core-web:latest
     env_file:
       - .opennms.env
       - .postgres.env
