@@ -40,11 +40,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-    healthcheck:
-      test: ["CMD", "echo", "hello"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
 volumes:
   database_data:
     driver: local-persist
