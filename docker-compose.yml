@@ -1,7 +1,7 @@
 version: '3'
 services:
   database:
-    image: postgres:9.6.1
+    image: postgres:9.5
     env_file:
       - .postgres.env
     ports:
@@ -16,7 +16,7 @@ services:
       mode: replicated
       replicas: 1
   opennms:
-    image: opennms/horizon-core-web:latest
+    image: rohscx/horizon-core-web
     env_file:
       - .opennms.env
       - .postgres.env
